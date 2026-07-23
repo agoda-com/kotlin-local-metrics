@@ -28,6 +28,13 @@ jobs:
       - name: Test
         run: ./gradlew test
 
+      - name: Test Ktor 3 compatibility
+        run: |
+          ./gradlew :ktor-startup-metrics:test \
+            -PktorVersion=3.5.0 \
+            -x :ktor-startup-metrics:compileKotlin \
+            --rerun-tasks
+
   release-dryrun:
     name: Release Dry-Run
     needs: build
