@@ -2,9 +2,13 @@ plugins {
     `java-gradle-plugin`
 }
 
-dependencies {
-    implementation(project(":metrics-core"))
+tasks.jar {
+    manifest {
+        attributes["Implementation-Version"] = project.version
+    }
+}
 
+dependencies {
     testImplementation(gradleTestKit())
     testImplementation(kotlin("test-junit5"))
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${libs.versions.junit.get()}")
