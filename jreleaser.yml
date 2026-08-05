@@ -1,0 +1,53 @@
+project:
+  name: kotlin-local-metrics
+  description: Local build, startup, and test metrics for Kotlin projects.
+  authors:
+    - Joel Dickson
+  license: Apache-2.0
+  links:
+    homepage: "https://github.com/agoda-com/kotlin-local-metrics"
+  languages:
+    java:
+      groupId: io.agodadev
+      artifactId: kotlin-local-metrics
+      version: "11"
+  maintainers:
+    - joeldickson
+  copyright: 2026 Agoda
+
+release:
+  github:
+    owner: agoda-com
+    name: kotlin-local-metrics
+
+signing:
+  active: ALWAYS
+  pgp:
+    armored: true
+
+distributions:
+  metrics-core:
+    type: JAVA_BINARY
+    artifacts:
+      - path: metrics-core/build/libs/metrics-core-{{projectVersion}}.jar
+  gradle-build-metrics-plugin:
+    type: JAVA_BINARY
+    artifacts:
+      - path: gradle-build-metrics-plugin/build/libs/gradle-build-metrics-plugin-{{projectVersion}}.jar
+  ktor-startup-metrics:
+    type: JAVA_BINARY
+    artifacts:
+      - path: ktor-startup-metrics/build/libs/ktor-startup-metrics-{{projectVersion}}.jar
+  junit5-test-metrics:
+    type: JAVA_BINARY
+    artifacts:
+      - path: junit5-test-metrics/build/libs/junit5-test-metrics-{{projectVersion}}.jar
+
+deploy:
+  maven:
+    mavenCentral:
+      app:
+        active: ALWAYS
+        url: https://central.sonatype.com/api/v1/publisher
+        stagingRepositories:
+          - build/staging-deploy
