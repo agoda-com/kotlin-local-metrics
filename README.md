@@ -2,6 +2,34 @@
 
 Local build and application startup metrics for Kotlin projects.
 
+## The problem: you can't improve an F5 Experience you can't see
+
+The **[F5 Experience](https://beerandserversdontmix.com/2024/08/15/an-introduction-to-the-f5-experience/)**
+is the idea that setting up and running a project should take exactly three steps:
+clone the repo, open it in your IDE, press F5. Everything after that — the compile,
+the startup, the first response, the test run — is the **inner loop** of development,
+and the speed of that loop largely determines how productive and how happy your
+engineers are.
+
+The trouble is that the inner loop is invisible. It happens hundreds of times a day
+on each engineer's machine, and none of it shows up anywhere. So when a build slowly
+creeps from 20 seconds to two minutes, nobody notices until developers have already
+started
+[context switching away every time they hit F5](https://beerandserversdontmix.com/2024/08/15/the-f5-experience-speed/)
+— going for coffee, checking Slack, losing their flow state. By then the damage is
+done and there's no data to explain when or why it happened. As the blog series puts
+it: **measure first.** You can't optimize an inner loop you've never measured, and
+compile time alone doesn't tell the whole story — the full cycle from pressing F5 to
+a workable application is what actually matters.
+
+This project instruments that inner loop on the developer's own machine. It captures
+local Gradle build metrics and Ktor application startup metrics and ships them to a
+metrics backend, so a team can see its real F5 Experience — build times, compilation
+times, startup times, and the context around them — and drive it down over time
+instead of guessing. Collection is deliberately local-only, asynchronous, and
+best-effort: it never fails or slows the build or app it's measuring, and it skips
+CI entirely.
+
 The Gradle build metrics plugin from
 [issue #1](https://github.com/agoda-com/kotlin-local-metrics/issues/1) is implemented.
 
