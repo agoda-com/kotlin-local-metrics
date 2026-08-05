@@ -1,17 +1,18 @@
 # kotlin-local-metrics
 
-Local build, application startup, and test metrics for Kotlin projects.
+Local build and application startup metrics for Kotlin projects.
 
 The Gradle build metrics plugin from
 [issue #1](https://github.com/agoda-com/kotlin-local-metrics/issues/1) is implemented.
-The JUnit module remains a scaffold.
+
+JUnit 5 test metrics are provided by
+[java-local-metrics](https://github.com/agoda-com/java-local-metrics).
 
 ## Modules
 
 - `metrics-core`: shared metrics payloads and transport
 - `gradle-build-metrics-plugin`: settings-scoped local build metrics (implemented)
 - `ktor-startup-metrics`: Ktor application startup metrics (implemented)
-- `junit5-test-metrics`: auto-discovered JUnit Platform test metrics
 
 ## Gradle build metrics
 
