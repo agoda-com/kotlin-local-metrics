@@ -52,6 +52,21 @@ jobs:
       - name: Create staging repositories
         run: ./gradlew -Pversion=${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }} publish
 
+      - name: Verify Maven Central credentials
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+        run: |
+          AUTH=$(printf '%s:%s' "$OSSRH_USERNAME" "$OSSRH_TOKEN" | base64 -w0)
+          CODE=$(curl -s -o /dev/null -w '%{http_code}' \
+            -H "Authorization: Bearer $AUTH" \
+            "https://central.sonatype.com/api/v1/publisher/published?namespace=io.agodadev&name=metrics-core&version=0.0.0-authcheck")
+          echo "Central Portal API returned HTTP $CODE"
+          if [ "$CODE" = "401" ] || [ "$CODE" = "403" ]; then
+            echo "::error::Maven Central authentication failed (HTTP $CODE). Check OSSRH_USERNAME and OSSRH_TOKEN secrets."
+            exit 1
+          fi
+
       - name: Run JReleaser
         uses: jreleaser/release-action@v2
         with:
@@ -101,7 +116,6 @@ jobs:
           JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
           JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           JRELEASER_MAVENCENTRAL_TOKEN: ${{ secrets.OSSRH_TOKEN }}
-        continue-on-error: true
 
       - name: JReleaser release output
         if: always()
