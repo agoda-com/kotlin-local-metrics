@@ -91,9 +91,6 @@ compatible artifacts.
 
 ## Publishing
 
-The GitHub Actions workflow follows the release setup from
-[java-local-metrics](https://github.com/agoda-com/java-local-metrics):
-
 - every push builds and tests all modules;
 - non-`main` pushes exercise a JReleaser dry-run;
 - `main` pushes stage and publish Maven Central artifacts.
