@@ -21,5 +21,4 @@ include(
     "metrics-core",
     "gradle-build-metrics-plugin",
     "ktor-startup-metrics",
-    "junit5-test-metrics",
 )

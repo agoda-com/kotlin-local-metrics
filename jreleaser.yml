@@ -1,6 +1,6 @@
 project:
   name: kotlin-local-metrics
-  description: Local build, startup, and test metrics for Kotlin projects.
+  description: Local build and startup metrics for Kotlin projects.
   authors:
     - Joel Dickson
   license: Apache-2.0
@@ -38,10 +38,6 @@ distributions:
     type: JAVA_BINARY
     artifacts:
       - path: ktor-startup-metrics/build/libs/ktor-startup-metrics-{{projectVersion}}.jar
-  junit5-test-metrics:
-    type: JAVA_BINARY
-    artifacts:
-      - path: junit5-test-metrics/build/libs/junit5-test-metrics-{{projectVersion}}.jar
 
 deploy:
   maven:

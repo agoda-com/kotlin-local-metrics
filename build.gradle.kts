@@ -15,7 +15,6 @@ val moduleDescriptions = mapOf(
     "metrics-core" to "Shared payload models and metrics transport.",
     "gradle-build-metrics-plugin" to "A Gradle settings plugin for local build metrics.",
     "ktor-startup-metrics" to "A Ktor application plugin for local startup metrics.",
-    "junit5-test-metrics" to "An auto-discovered JUnit 5 listener for local test metrics.",
 )
 
 allprojects {

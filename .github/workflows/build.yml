@@ -132,7 +132,7 @@ jobs:
           SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
         run: |
-          for artifact in metrics-core gradle-build-metrics-plugin ktor-startup-metrics junit5-test-metrics; do
+          for artifact in metrics-core gradle-build-metrics-plugin ktor-startup-metrics; do
             sh .github/tools/check_publish.sh \
               --namespace io.agodadev \
               --bundle-name "$artifact" \
