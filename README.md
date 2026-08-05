@@ -8,7 +8,7 @@ Local build and application startup metrics for Kotlin projects.
 
 ## The problem: you can't improve an F5 Experience you can't see
 
-The **[F5 Experience](https://beerandserversdontmix.com/2024/08/15/an-introduction-to-the-f5-experience/)**
+The **[F5 Experience](https://medium.com/beer-and-servers-dont-mix/the-f5-experience-local-setup-8097be8d9e3c)**
 is the idea that setting up and running a project should take exactly three steps:
 clone the repo, open it in your IDE, press F5. Everything after that — the compile,
 the startup, the first response, the test run — is the **inner loop** of development,
@@ -19,7 +19,7 @@ The trouble is that the inner loop is invisible. It happens hundreds of times a 
 on each engineer's machine, and none of it shows up anywhere. So when a build slowly
 creeps from 20 seconds to two minutes, nobody notices until developers have already
 started
-[context switching away every time they hit F5](https://beerandserversdontmix.com/2024/08/15/the-f5-experience-speed/)
+[context switching away every time they hit F5](https://medium.com/beer-and-servers-dont-mix/the-f5-experience-speed-1821a6f9edcd)
 — going for coffee, checking Slack, losing their flow state. By then the damage is
 done and there's no data to explain when or why it happened. As the blog series puts
 it: **measure first.** You can't optimize an inner loop you've never measured, and
