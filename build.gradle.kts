@@ -5,6 +5,7 @@ import org.gradle.jvm.tasks.Jar
 import org.gradle.jvm.toolchain.JavaToolchainService
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
     alias(libs.plugins.kotlin.jvm) apply false
@@ -42,6 +43,36 @@ subprojects {
     extensions.configure<KotlinJvmProjectExtension> {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
+            // Consumers of these published modules run Kotlin compilers as old as 1.9;
+            // emit 1.9-readable metadata so the artifacts stay consumable there.
+            apiVersion.set(KotlinVersion.KOTLIN_2_0)
+            languageVersion.set(KotlinVersion.KOTLIN_2_0)
+        }
+    }
+
+    // kotlin.stdlib.default.dependency=false (gradle.properties) — declare the pinned
+    // stdlib explicitly so published POMs reference a 1.9-compatible version.
+    dependencies {
+        "api"("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+    }
+
+    // Keep every org.jetbrains.kotlin artifact (stdlib, kotlin-test, reflect) on the
+    // pinned version across consumer-facing classpaths so nothing 2.x-metadata leaks
+    // into compilation or publication. KGP-internal configurations (compiler, build
+    // tools) are excluded — they must keep their own 2.x stdlib.
+    val kotlinPinnedConfigurations = setOf(
+        "compileClasspath", "runtimeClasspath", "testCompileClasspath", "testRuntimeClasspath",
+        "apiElements", "runtimeElements",
+    )
+    configurations.configureEach {
+        if (name !in kotlinPinnedConfigurations) return@configureEach
+        resolutionStrategy.eachDependency {
+            if (requested.group == "org.jetbrains.kotlin" &&
+                (requested.name.startsWith("kotlin-stdlib") || requested.name.startsWith("kotlin-test") || requested.name == "kotlin-reflect")
+            ) {
+                useVersion("2.0.21")
+                because("published artifacts must stay consumable by Kotlin 1.9 compilers")
+            }
         }
     }
 
