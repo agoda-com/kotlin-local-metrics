@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/logo.png" alt="kotlin-local-metrics logo" width="160" />
+</p>
+
 # kotlin-local-metrics
 
 Local build and application startup metrics for Kotlin projects.
