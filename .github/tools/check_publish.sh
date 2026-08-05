@@ -10,7 +10,7 @@ if [ -z "$SONATYPE_USERNAME" ] || [ -z "$SONATYPE_PASSWORD" ]; then
     echo "SONATYPE_USERNAME and SONATYPE_PASSWORD environment variables must be set"
     exit 1
 fi
-AUTH_TOKEN=$(echo "$SONATYPE_USERNAME:$SONATYPE_PASSWORD" | base64)
+AUTH_TOKEN=$(printf '%s:%s' "$SONATYPE_USERNAME" "$SONATYPE_PASSWORD" | base64 -w0)
 
 # Initialize variables
 NAMESPACE=""
