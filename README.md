@@ -8,7 +8,7 @@ Local build and application startup metrics for Kotlin projects.
 
 ## The problem: you can't improve an F5 Experience you can't see
 
-The **[F5 Experience](https://medium.com/beer-and-servers-dont-mix/the-f5-experience-local-setup-8097be8d9e3c)**
+The **[F5 Experience](https://medium.com/beer-and-servers-dont-mix/an-introduction-to-the-f5-experience-8027d9e6c473)**
 is the idea that setting up and running a project should take exactly three steps:
 clone the repo, open it in your IDE, press F5. Everything after that — the compile,
 the startup, the first response, the test run — is the **inner loop** of development,
