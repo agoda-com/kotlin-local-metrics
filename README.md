@@ -71,6 +71,11 @@ or delay the build.
 The default endpoint is `http://compilation-metrics/gradle`. Override it with the
 `BUILD_METRICS_ES_ENDPOINT` environment variable.
 
+When the endpoint is unreachable the payload is buffered under
+`<gradle user home>/kotlin-local-metrics/unsent-build-metrics` and flushed on the next
+build that sends successfully, so builds done offline are not lost. The buffer holds at
+most 200 payloads and discards anything older than seven days.
+
 ## Ktor startup metrics
 
 Add the module to a Ktor server and install the application plugin:
