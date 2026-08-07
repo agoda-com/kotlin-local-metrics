@@ -1,5 +1,6 @@
 package io.agodadev.localmetrics.gradle
 
+import java.io.File
 import javax.inject.Inject
 import org.gradle.build.event.BuildEventsListenerRegistry
 import org.gradle.api.Plugin
@@ -31,6 +32,9 @@ public class BuildMetricsPlugin @Inject constructor(
             serviceSpec.parameters.rootDirectory.set(target.rootDir)
             serviceSpec.parameters.requestedTasks.set(target.gradle.startParameter.taskNames)
             serviceSpec.parameters.timeoutMillis.set(HTTP_TIMEOUT_MILLIS)
+            serviceSpec.parameters.bufferDirectory.set(
+                File(target.gradle.gradleUserHomeDir, BUFFER_DIRECTORY),
+            )
         }
 
         listenerRegistry.onTaskCompletion(service)
@@ -49,5 +53,6 @@ public class BuildMetricsPlugin @Inject constructor(
         const val ENDPOINT_ENVIRONMENT_VARIABLE = "BUILD_METRICS_ES_ENDPOINT"
         const val DEFAULT_ENDPOINT = "http://compilation-metrics/gradle"
         const val HTTP_TIMEOUT_MILLIS = 2_000
+        const val BUFFER_DIRECTORY = "kotlin-local-metrics/unsent-build-metrics"
     }
 }

@@ -25,6 +25,9 @@ public abstract class BuildMetricsService :
         public val rootDirectory: DirectoryProperty
         public val requestedTasks: ListProperty<String>
         public val timeoutMillis: Property<Int>
+
+        /** Where payloads are parked while the metrics endpoint is unreachable. */
+        public val bufferDirectory: DirectoryProperty
     }
 
     private val taskMetrics = ConcurrentHashMap<String, TaskMetric>()
@@ -74,8 +77,10 @@ public abstract class BuildMetricsService :
 
             MetricsPublisher.post(
                 endpoint = parameters.endpoint.get(),
+                payloadId = payload.id,
                 json = BuildMetricsJson.encode(payload),
                 timeoutMillis = parameters.timeoutMillis.get(),
+                buffer = parameters.bufferDirectory.orNull?.asFile?.let(::UnsentMetricsBuffer),
             )
         }
     }

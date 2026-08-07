@@ -22,3 +22,16 @@ the build.
 
 The default endpoint is `http://compilation-metrics/gradle`. Override it with the
 `BUILD_METRICS_ES_ENDPOINT` environment variable.
+
+## Offline buffering
+
+When the endpoint cannot be reached — the developer is offline, the VPN is down, DNS
+fails — the payload is written to
+`<gradle user home>/kotlin-local-metrics/unsent-build-metrics` instead of being dropped.
+The next build whose send succeeds flushes those payloads and deletes each one as it
+is accepted, so builds done offline are not lost.
+
+The buffer is bounded: at most 200 payloads, and nothing older than seven days. Older
+entries beyond either cap are discarded. A payload that a reachable endpoint refuses is
+discarded rather than retried. All buffer I/O is off the build's critical path and, like
+the rest of collection, can never fail the build.
